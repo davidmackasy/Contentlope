@@ -29,9 +29,22 @@
     "AI_TEXT_MODEL": "gpt-4.1-mini",
     "AI_IMAGE_MODEL": "gpt-image-2.5-flare",
     "AI_IMAGE_EDIT_MODEL": "gpt-image-2.5-sunburst",
-    "SCHEDULER_ENABLED": "false"
+    "SCHEDULER_ENABLED": "false",
+    "APP_URL": "https://contentpilot.davidmackasy.workers.dev"
   },
   "observability": {
     "enabled": true
-  }
+  },
+  "find_additional_modules": true,
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": [
+        "**/*.js",
+        "**/*.mjs"
+      ]
+    }
+  ],
+  "workers_dev": true,
+  "preview_urls": false
 }
