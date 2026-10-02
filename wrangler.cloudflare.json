@@ -1,7 +1,7 @@
 {
   "name": "contentpilot",
   "account_id": "f8e963c4de07dc7d399bc2126d0b18a9",
-  "main": "dist/server/index.js",
+  "main": "dist/server/cloudflare-entry.js",
   "compatibility_date": "2026-05-15",
   "compatibility_flags": [
     "nodejs_compat"
@@ -29,7 +29,7 @@
     "AI_TEXT_MODEL": "gpt-4.1-mini",
     "AI_IMAGE_MODEL": "gpt-image-2.5-flare",
     "AI_IMAGE_EDIT_MODEL": "gpt-image-2.5-sunburst",
-    "SCHEDULER_ENABLED": "false",
+    "SCHEDULER_ENABLED": "true",
     "APP_URL": "https://contentpilot.davidmackasy.workers.dev"
   },
   "observability": {
@@ -49,5 +49,10 @@
   "preview_urls": false,
   "browser": {
     "binding": "BROWSER"
+  },
+  "triggers": {
+    "crons": [
+      "* * * * *"
+    ]
   }
 }
