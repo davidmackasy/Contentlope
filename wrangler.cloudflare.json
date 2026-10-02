@@ -54,5 +54,15 @@
     "crons": [
       "* * * * *"
     ]
-  }
+  },
+  "routes": [
+    {
+      "pattern": "tryriffi.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.tryriffi.com",
+      "custom_domain": true
+    }
+  ]
 }
