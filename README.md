@@ -89,3 +89,9 @@ New Google users receive a workspace; returning Google users reopen their worksp
 ## Riffi brand and domain
 
 The product name is **Riffi** and the brand domain is **tryriffi.com**. The public voice is “Meet Riffi. The buddy behind your brand.” Existing Cloudflare Worker, database, bucket and repository identifiers are retained to preserve infrastructure and account data. Connecting the custom domain is a separate DNS/Worker configuration step; once connected, update APP_URL and Google/Post for Me callback URLs together.
+
+## Policies and support
+
+Public pages: `/privacy`, `/terms`, `/cookies`, `/acceptable-use`, `/refunds`, `/data-deletion` and `/support`. The older `/legal?tab=privacy` and `/legal?tab=terms` links remain compatible. Policy copy is maintained in `lib/policies.ts`, with support@riffi.com as the sole Riffi contact email and Canadian operations stated. These pages describe configured functionality without promising enabled email delivery, payment processing, video generation or live Google login. Publishing the pages does not provision the support mailbox.
+
+The operating legal entity and province have not been supplied. Confirm these with Canadian counsel, including any applicable provincial requirements, before relying on the policies as final legal documents. Account export/deletion and refund requests are assisted processes, not automated features; support must verify ownership and carry them out under applicable law. Do not advertise response guarantees, refunds or retention periods beyond the policy and actual operations.
