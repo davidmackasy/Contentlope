@@ -1,0 +1,8 @@
+export type Slide={id:string;position:number;purpose:string;headline:string;supporting_text:string;asset_id:string|null;visual_source:string;visual_prompt:string;template_id:string;layout:string;cta:string;status:string;align:'left'|'center'|'right';font_size:number;crop_x:number;crop_y:number;canvas:{width:number;height:number}};
+export type Business={id:string;workspace_id:string;name:string;website:string;type:string;description:string;brain:Record<string,any>;kit:Record<string,any>;preferences:Record<string,any>;onboarding_step:number;onboarding_status:string};
+export type Content={id:string;business_id:string;title:string;prompt:string;type:string;platform:string;goal:string;tone:string;cta_type:string;template:string;status:string;slides:Slide[];caption:string;hashtags:string[];metadata:Record<string,any>;revision:number;created_at:string;updated_at:string};
+export type Asset={id:string;business_id:string;name:string;category:string;mime:string;tags:string[];favorite:number;size:number;source:string;metadata:Record<string,any>};
+export const TEMPLATE_NAMES=['Viral Bold','Creator UGC','Minimal','Editorial','Product Demo','SaaS','Lifestyle','Storytime','Dark Tech','Educational'];
+export const CATEGORIES=['Logo','Product','Screenshot','Person','Founder','UGC','Website','Generated','Other'];
+export const BUSINESS_TYPES=['SaaS / App','E-commerce','Personal Brand','Creator','Local Business','Service Business','Agency','Restaurant','Real Estate','Education','Other'];
+export const STAGES=['Understanding your brand','Planning the story','Writing connected slides','Choosing visuals','Checking consistency'];
