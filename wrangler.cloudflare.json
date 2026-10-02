@@ -1,0 +1,37 @@
+{
+  "name": "contentpilot",
+  "account_id": "f8e963c4de07dc7d399bc2126d0b18a9",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "no_bundle": true,
+  "assets": {
+    "directory": "dist/client"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "contentpilot-db",
+      "database_id": "4a25e80c-15ad-4923-82af-56b3717ec8f7",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BUCKET",
+      "bucket_name": "contentpilot-assets"
+    }
+  ],
+  "vars": {
+    "HOSTING_PROVIDER": "cloudflare",
+    "AI_TEXT_MODEL": "gpt-4.1-mini",
+    "AI_IMAGE_MODEL": "gpt-image-2.5-flare",
+    "AI_IMAGE_EDIT_MODEL": "gpt-image-2.5-sunburst",
+    "SCHEDULER_ENABLED": "false"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

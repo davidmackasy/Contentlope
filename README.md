@@ -65,3 +65,7 @@ Website onboarding reads public HTML, linked CSS and bounded CSS imports to find
 The composer offers photo stories, large editable text, and AI photos. Text layers remain editable with placement, outline/label/clean treatments, color, weight, size and optional branding. Preview and export share the slide presentation settings. AI photos use OpenAI GPT Image 2.5 Flare; reference edits use Sunburst. Live AI requires the configured API key; tests mock provider calls.
 
 Validation: TypeScript check and 17 integration tests pass, including brand asset isolation, font import, editable slide persistence and OpenAI generation/edit requests. Local browser verification created and customized a bold-text draft.
+
+## Your own Cloudflare account
+
+`wrangler.cloudflare.json` binds the Worker to the owner’s Cloudflare D1 database and R2 bucket. Enable R2 in the account dashboard before creating `contentpilot-assets`. Run `npm run cloudflare:migrate`, configure `AI_TEXT_API_KEY`, `AI_IMAGE_API_KEY`, `TOKEN_ENCRYPTION_KEY` as Wrangler secrets, then `npm run cloudflare:deploy`. Set `APP_URL` to the resulting Worker/custom-domain URL. ChatGPT sign-in is hidden on standalone Cloudflare; email/password sign-in remains available. Existing Sites database records and R2 objects are not automatically migrated; retain the current site until an export/import has been completed. Never upload `.env.local` to GitHub.
