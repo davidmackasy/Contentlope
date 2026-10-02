@@ -1,4 +1,4 @@
-# ContentPilot
+# Riffi
 
 A working first release of the brand-aware social content studio described in the supplied PRD. Carousels are the primary workflow; video is secondary. React, TypeScript and Vinext run on a Cloudflare Worker, with D1 persistence and private R2 media storage.
 
@@ -85,3 +85,7 @@ Live OAuth and posting verification require the project key and connected destin
 Email/password signup and login remain available. Configure a Google Auth Platform OAuth client of type **Web application**, with the authorized redirect URI `https://contentpilot.davidmackasy.workers.dev/api/auth/google-callback`. Configure the consent branding/audience for your app; during testing only added test users can sign in. Store `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env.local` and Cloudflare Worker secrets. Both credentials are required to enable the Google button. Update the Google authorized redirect URI and `APP_URL` together when adding a custom domain.
 
 New Google users receive a workspace; returning Google users reopen their workspace. An existing email/password user signs in first, then chooses **Profile → Connect Google to this account**, using the same Google email. Linking requires the original signed-in session, an exact email match, verified Google profile, and single-use OAuth state. Password login continues to work after linking. Suspended accounts cannot sign in. Google access tokens are used only to obtain the profile and are not retained.
+
+## Riffi brand and domain
+
+The product name is **Riffi** and the brand domain is **tryriffi.com**. The public voice is “Meet Riffi. The buddy behind your brand.” Existing Cloudflare Worker, database, bucket and repository identifiers are retained to preserve infrastructure and account data. Connecting the custom domain is a separate DNS/Worker configuration step; once connected, update APP_URL and Google/Post for Me callback URLs together.
