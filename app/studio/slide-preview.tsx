@@ -1,2 +1,19 @@
-'use client';import type {Slide,Business} from '@/lib/types';import {templateColors} from '@/lib/render';
-export default function SlidePreview({slide,business,index=0,total=5,mini=false}:{slide:Slide;business:Business;index?:number;total?:number;mini?:boolean}){const colors=templateColors(slide.template_id,business.kit);const photo=!!slide.asset_id;return <div className={'slide-preview '+(mini?'mini ':'')+(photo?'has-photo ':'')+(slide.layout==='split'?'split ':'')+(slide.template_id==='Editorial'||slide.template_id==='Storytime'?'editorial':'')} style={{background:colors.bg,color:photo&&slide.layout!=='split'?'white':colors.fg,aspectRatio:`1080/${slide.canvas.height}`}}>{photo&&<img className="slide-photo" src={'/api/assets/'+slide.asset_id+'/file'} alt="" style={{objectPosition:`${slide.crop_x}% ${slide.crop_y}%`}}/>}{photo&&slide.layout!=='split'&&<div className="slide-shade"/>}<div className="slide-brand"><span>{business.name}</span>{business.kit.logo_asset_id?<img src={'/api/assets/'+business.kit.logo_asset_id+'/file'} alt="Brand logo"/>:<span>✳</span>}</div><div className="slide-text" style={{textAlign:slide.align,fontSize:`${slide.font_size}em`}}><small>{slide.purpose.toUpperCase()}</small><h3 style={{fontFamily:slide.template_id==='Editorial'||slide.template_id==='Storytime'?'Georgia':business.kit.heading_font}}>{slide.headline}</h3><p>{slide.supporting_text}</p></div><div className="slide-cta" style={{color:photo&&slide.layout!=='split'?'white':colors.accent,textAlign:slide.align}}>{slide.cta}</div><div className="slide-footer"><span>{index===total-1?'SAVE FOR LATER':'SWIPE FOR MORE'}</span><span>{String(index+1).padStart(2,'0')} / {String(total).padStart(2,'0')}</span></div></div>}
+'use client';
+import {useEffect} from 'react';
+import type {Slide,Business} from '@/lib/types';
+import {templateColors} from '@/lib/render';
+import {presentation,contrastColor} from '@/lib/slide-design';
+import {loadBrandFonts} from '@/lib/brand-fonts';
+export default function SlidePreview({slide,business,index=0,total=5,mini=false}:{slide:Slide;business:Business;index?:number;total?:number;mini?:boolean}){
+ const colors=templateColors(slide.template_id,business.kit),p=presentation(slide);
+ useEffect(()=>{loadBrandFonts(business.kit)},[business.kit]);
+ const color=slide.text_color||(p.photo&&slide.layout!=='split'?'#ffffff':contrastColor(colors.bg));
+ return <div className={'slide-preview native-slide '+(mini?'mini ':'')+(p.photo?'has-photo ':'')+(slide.layout==='split'?'split ':'')+'text-'+p.position+' style-'+p.style} style={{background:colors.bg,color,aspectRatio:`1080/${slide.canvas.height}`}}>
+ {p.photo&&<img className="slide-photo" src={'/api/assets/'+slide.asset_id+'/optimized'} alt="" style={{objectPosition:`${slide.crop_x}% ${slide.crop_y}%`}}/>}
+ {p.photo&&p.shade>0&&<div className="slide-shade" style={{background:`rgba(0,0,0,${p.shade})`}}/>}
+ {p.showBrand&&<div className="slide-brand"><span>{business.name}</span>{business.kit.logo_asset_id&&<img src={'/api/assets/'+business.kit.logo_asset_id+'/file'} alt="Brand logo"/>}</div>}
+ <div className="slide-text" style={{textAlign:slide.align}}><h3 style={{fontFamily:p.photo?'Arial, sans-serif':business.kit.heading_font||'Arial',fontSize:`${p.headlineSize}cqw`,fontWeight:p.weight,color,lineHeight:p.photo?1.13:1.02,letterSpacing:p.photo?'-.035em':'-.055em',WebkitTextStroke:p.style==='outlined'?`${p.photo ? 0.5 : 0.65}cqw #111`:undefined,paintOrder:'stroke fill'}}><span>{slide.headline}</span></h3>{p.showBody&&slide.supporting_text&&<p style={{fontSize:`${p.bodySize}cqw`,color,fontFamily:business.kit.body_font||'Arial'}}>{slide.supporting_text}</p>}</div>
+ {slide.cta&&<div className="slide-cta" style={{color,textAlign:slide.align}}><span>{slide.cta}</span></div>}
+ <div className="slide-footer"><span/><span>{index+1}/{total}</span></div>
+ </div>
+}

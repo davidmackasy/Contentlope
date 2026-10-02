@@ -1,0 +1,2 @@
+const loaded=new Map<string,Promise<void>>();
+export async function loadBrandFonts(kit:any){if(typeof document==='undefined'||typeof FontFace==='undefined')return;await Promise.all((kit.font_faces||[]).map((f:any)=>{const key=f.asset_id+f.weight+f.style;if(!loaded.has(key)){const face=new FontFace(f.name,`url(/api/assets/${encodeURIComponent(f.asset_id)}/file)`,{weight:f.weight||'400',style:f.style||'normal'});loaded.set(key,face.load().then(font=>{document.fonts.add(font)}).catch(()=>{loaded.delete(key)}))}return loaded.get(key)}))}

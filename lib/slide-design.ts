@@ -1,0 +1,5 @@
+import type {Slide} from './types';
+export type VisualMode='photos'|'text'|'generate';
+export function applySlideDesign(slide:Slide,mode:VisualMode):Slide{return {...slide,layout:'standard',align:'center',font_size:1,text_position:mode==='text'?'middle':'top',text_style:mode==='text'?'clean':'outlined',text_color:mode==='text'?undefined:'#ffffff',text_weight:'800',show_brand:false,show_body:mode==='text',overlay_opacity:0}}
+export function presentation(slide:Slide){const photo=!!slide.asset_id;return {photo,position:slide.text_position||(photo?'top':'middle'),style:slide.text_style||(photo?'outlined':'clean'),weight:slide.text_weight||'800',showBrand:slide.show_brand??false,showBody:slide.show_body??!photo,shade:slide.overlay_opacity??0,headlineSize:(photo?8.2:14)*slide.font_size,bodySize:photo?4.8:5.2}}
+export function contrastColor(hex:string){const rgb=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2]>.4?'#151515':'#ffffff'}

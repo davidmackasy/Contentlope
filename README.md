@@ -57,3 +57,11 @@ The integration suite uses the actual migration and SQLite with D1/R2 adapters. 
 This is a first release, not the completion of every future-facing PRD feature. Live provider verification, scheduler provisioning, video provider service and video publishing need completion/configuration. Team invitations/roles beyond owner access, sophisticated semantic/vision slide QA, complete TikTok analytics and conversion attribution, configurable template rendering and a production observability/alerting service remain follow-up work. Website analysis and guided draft copy should be reviewed before posting. Legal copy is initial product copy and needs business-specific review before public launch.
 
 The source and database deliberately distinguish draft, generating, planned, scheduled, publishing, failed and published states. Unavailable integrations never create fabricated success records.
+
+## Website branding and native social slides
+
+Website onboarding reads public HTML, linked CSS and bounded CSS imports to find the logo, palette, heading/body fonts, business metadata and usable photographs. Imported assets remain private to the business and are deduplicated. Successful fields are applied automatically; missing items have manual fallbacks. JavaScript-only sites and inaccessible resources can produce partial imports.
+
+The composer offers photo stories, large editable text, and AI photos. Text layers remain editable with placement, outline/label/clean treatments, color, weight, size and optional branding. Preview and export share the slide presentation settings. AI photos use OpenAI GPT Image 2.5 Flare; reference edits use Sunburst. Live AI requires the configured API key; tests mock provider calls.
+
+Validation: TypeScript check and 17 integration tests pass, including brand asset isolation, font import, editable slide persistence and OpenAI generation/edit requests. Local browser verification created and customized a bold-text draft.
