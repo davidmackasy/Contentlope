@@ -44,7 +44,7 @@ The integration suite uses the actual migration and SQLite with D1/R2 adapters. 
 
 - `APP_URL` is the production origin. `TOKEN_ENCRYPTION_KEY` is a random 32-byte base64 secret for social token encryption. Changing it requires reconnecting social accounts.
 - Email: `MAIL_API_KEY`, `MAIL_FROM`; the default adapter uses Resend's email API. Verification and reset flows report unavailable delivery until configured.
-- Google: client ID/secret, callback `/api/auth/google/callback`.
+- Google: client ID/secret, callback `/api/auth/google-callback`.
 - AI text and image: OpenAI-compatible base URLs, keys and models. Text uses JSON chat completions; image generation/editing expects base64 output. Without keys, drafts are explicitly labeled guided and image generation is unavailable.
 - Video: custom service `POST /generate` returning `{id}`, then `GET /jobs/:id` returning `{status,output_url?,error?}`. States are `pending`, `processing`, `completed`, `failed`; completion must supply a public HTTPS MP4. It requires a separately implemented provider service following this contract. Video social publishing is not included in this release.
 - Stripe: secret/webhook keys and Creator/Growth price IDs. Configure signed webhook destination `/api/webhooks/stripe`. Prices displayed in the app come from its plans table; align those with Stripe prices.
@@ -82,7 +82,7 @@ Live OAuth and posting verification require the project key and connected destin
 
 ## Google sign-in
 
-Email/password signup and login remain available. Configure a Google Auth Platform OAuth client of type **Web application**, with the authorized redirect URI `https://contentpilot.davidmackasy.workers.dev/api/auth/google-callback`. Configure the consent branding/audience for your app; during testing only added test users can sign in. Store `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env.local` and Cloudflare Worker secrets. Both credentials are required to enable the Google button. Update the Google authorized redirect URI and `APP_URL` together when adding a custom domain.
+Email/password signup and login remain available. Configure a Google Auth Platform OAuth client of type **Web application**, with the authorized redirect URI `https://tryriffi.com/api/auth/google-callback`. Configure the consent branding/audience for your app; during testing only added test users can sign in. Store `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env.local` and Cloudflare Worker secrets. Both credentials are required to enable the Google button. Update the Google authorized redirect URI and `APP_URL` together when adding a custom domain.
 
 New Google users receive a workspace; returning Google users reopen their workspace. An existing email/password user signs in first, then chooses **Profile → Connect Google to this account**, using the same Google email. Linking requires the original signed-in session, an exact email match, verified Google profile, and single-use OAuth state. Password login continues to work after linking. Suspended accounts cannot sign in. Google access tokens are used only to obtain the profile and are not retained.
 
