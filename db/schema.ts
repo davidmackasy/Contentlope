@@ -25,3 +25,7 @@ export const models=sqliteTable('ai_models',{id:id(),kind:text('kind').notNull()
 export const audits=sqliteTable('audit_logs',{id:id(),userId:text('user_id'),businessId:text('business_id'),event:text('event').notNull(),details:text('details').notNull().default('{}'),createdAt:created()});
 export const webhooks=sqliteTable('webhook_events',{id:id(),provider:text('provider').notNull(),createdAt:created()});
 export const notifications=sqliteTable('notifications',{id:id(),userId:text('user_id').notNull(),title:text('title').notNull(),message:text('message').notNull(),read:integer('read').notNull().default(0),createdAt:created()});
+
+export const creditWallets=sqliteTable('credit_wallets',{workspaceId:text('workspace_id').primaryKey().references(()=>workspaces.id),balance:integer('balance').notNull().default(0),reserved:integer('reserved').notNull().default(0)});
+export const creditPurchases=sqliteTable('credit_purchases',{id:id(),workspaceId:text('workspace_id').notNull().references(()=>workspaces.id),credits:integer('credits').notNull(),createdAt:created()});
+export const videoJobs=sqliteTable('video_jobs',{contentId:text('content_id').primaryKey().references(()=>content.id),workspaceId:text('workspace_id').notNull().references(()=>workspaces.id),requestKey:text('request_key').notNull(),credits:integer('credits').notNull(),status:text('status').notNull(),state:text('state').notNull().default('{}'),lockedAt:text('locked_at'),createdAt:created()},t=>({request:uniqueIndex('video_request_unique').on(t.workspaceId,t.requestKey)}));

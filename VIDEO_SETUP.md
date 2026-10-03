@@ -1,0 +1,17 @@
+# Riffi reference videos
+
+Create → Video → From a reference provides Recreate with me and Remix for my brand alongside existing slideshows and idea-based videos. Users upload MP4 (80 MB maximum), select a 1–14.90-second segment, supply an identity photo, optionally add product images and directions, and choose spoken captions. Saved briefs reopen in the editor with all settings. Generating from a saved brief creates a new video draft, preserving the original brief.
+
+## Production configuration
+
+Set Cloudflare server secret `FAL_KEY`. Set `VIDEO_CREDITS_PER_SECOND` to a positive whole-number credit rate after reviewing actual fal model costs and your margin. Add one-time Stripe prices in `STRIPE_VIDEO_STARTER_PRICE_ID` (100 credits) and `STRIPE_VIDEO_STUDIO_PRICE_ID` (500 credits), plus existing Stripe secret and webhook settings. Subscribe the webhook to `checkout.session.completed` and `checkout.session.async_payment_succeeded`. Apply `0001_video_credits.sql`. The existing minute cron advances video jobs as well as scheduled posts. Keys and model prompts stay on the server.
+
+Generation and purchases stay disabled when configuration is missing. The UI can save briefs without a provider or credits. Credit checkout saves a valid brief first and returns to it. Signed, paid Stripe sessions grant credits once. Reservations prevent overspending; completed output deducts the reservation; definite failures release it. A submission interrupted before its provider ID is stored is marked `uncertain` and held for support reconciliation, never automatically resubmitted. Confirm its provider result before manually settling or restarting it. Do not clear a hold without checking for an accepted provider job.
+
+## Pipeline and limits
+
+Recreate trims the source, then calls `alibaba/wan-3.0/reference-to-video` with the selected identity images, source motion, and private motion-master instructions. Remix analyzes the trimmed source with `fal-ai/video-understanding`, generates an original written brand concept, then calls Wan with images and that concept only. Source pixels are not sent to the render stage for Remix. Both paths trim output to at most 14.90 seconds and can burn spoken captions using `fal-ai/auto-caption`. The exported MP4 goes to the private asset library and the existing review/download/calendar/Post for Me flow.
+
+Wan reference inputs require at least 16 fps. Source MP4 duration is parsed before accepting a trim. Provider validation handles unsupported encodings. AI identity, motion, and product fidelity are approximate and require review. The implementation generates a whole clip from a scene description; it does not independently render and stitch every scene, insert exact app screen recordings, or use an automated editing agent. TikTok URL import is best effort for public downloadable video; blocked links show an MP4 upload fallback. No login bypass or guaranteed TikTok extraction is provided.
+
+Credit quotes use `(ceil(output seconds) + ceil(reference seconds) + mode overhead + caption overhead) × configured rate`; overhead is 2 for Recreate, 5 for Remix, plus output seconds when captions are enabled. This is a product credit formula, not a claim about fal billing. Validate real provider cost before setting rates. End-to-end paid rendering and Stripe checkout must be verified once credentials and prices are configured. TikTok production publishing still depends on approved TikTok production credentials.

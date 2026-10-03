@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS credit_wallets (workspace_id TEXT PRIMARY KEY REFERENCES workspaces(id), balance INTEGER NOT NULL DEFAULT 0 CHECK(balance>=0), reserved INTEGER NOT NULL DEFAULT 0 CHECK(reserved>=0 AND reserved<=balance));
+CREATE TABLE IF NOT EXISTS credit_purchases (id TEXT PRIMARY KEY, workspace_id TEXT NOT NULL REFERENCES workspaces(id), credits INTEGER NOT NULL, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS video_jobs (content_id TEXT PRIMARY KEY REFERENCES content_packages(id) DEFERRABLE INITIALLY DEFERRED, workspace_id TEXT NOT NULL REFERENCES workspaces(id), request_key TEXT NOT NULL, credits INTEGER NOT NULL, status TEXT NOT NULL, state TEXT NOT NULL DEFAULT '{}', locked_at TEXT, created_at TEXT NOT NULL, UNIQUE(workspace_id,request_key));
